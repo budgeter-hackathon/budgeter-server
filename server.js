@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(cors());
 
+app.get("/", (req, res) => {});
+app.post("/", (req, res) => {});
+
 app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log(err);
