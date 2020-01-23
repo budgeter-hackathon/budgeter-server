@@ -1,3 +1,9 @@
+/**
+ * Creates the connection to Sequelize using a .env file which should be created
+ * in your own local branch of this repository.
+ * Set logging to true to the verbose command line output of the raw SQL queries
+ * that Sequelize is executing.
+ */
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
   process.env.MYSQL_DATABASE,
@@ -5,24 +11,63 @@ const sequelize = new Sequelize(
   process.env.MYSQL_PASSWORD,
   {
     dialect: "mysql",
-    logging: false
+    logging: console.log
   }
 );
 
+/**
+ * This authenticates / confirms the connection to the MySQL instance.
+ */
+
+/**
+ * Initializes each model / table in the database.
+ */
+const AccountModel = require("../models").Account;
+const CategoryModel = require("../models").Category;
+const TransactionModel = require("../models").Transaction;
+
+const Account = AccountModel(sequelize, Sequelize);
+const Category = CategoryModel(sequelize, Sequelize);
+const Transaction = TransactionModel(sequelize, Sequelize);
+
+/**
+ * This syncs all models defined in the seqeuliz instance.
+ */
 sequelize
   .authenticate()
-  .then(() => {
-    console.log("Sequelize authenticated!");
-  })
+  .then(() => console.log("Sequelize authenticated!"))
   .catch((err) => console.log(err));
 
 sequelize
   .sync({ force: true })
+  .then(() => console.log("Sequelize synced!"))
   .then(() => {
-    console.log("Database syned via Sequelize!");
+    Account.create({ name: "Checking" })
+      .then((res) => console.log(res.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
+    Category.create({ name: "Food", targetBudget: 1234.56 })
+      .then((res) => console.log(res.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
+    Transaction.create({
+      amount: 12,
+      description: "Big sandwich for big boi",
+      transactionType: "debit",
+      date: new Date(),
+      categoryId: 1,
+      accountId: 1
+    })
+      .then((res) => console.log(res.dataValues))
+      .catch((err) => console.log(err));
   })
   .catch((err) => console.log(err));
 
 module.exports = {
-  sequelize: sequelize
+  sequelize: sequelize,
+  Account: Account,
+  Category: Category,
+  Transaction: Transaction
 };
