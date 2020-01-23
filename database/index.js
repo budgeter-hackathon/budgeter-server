@@ -16,19 +16,17 @@ const sequelize = new Sequelize(
 );
 
 /**
- * This authenticates / confirms the connection to the MySQL instance.
- */
-
-/**
  * Initializes each model / table in the database.
  */
 const AccountModel = require("../models").Account;
 const CategoryModel = require("../models").Category;
 const TransactionModel = require("../models").Transaction;
+const UserModel = require("../models").User;
 
 const Account = AccountModel(sequelize, Sequelize);
 const Category = CategoryModel(sequelize, Sequelize);
 const Transaction = TransactionModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize);
 
 /**
  * This syncs all models defined in the seqeuliz instance.
@@ -63,6 +61,16 @@ sequelize
       .then((res) => console.log(res.dataValues))
       .catch((err) => console.log(err));
   })
+  .then(() => {
+    User.create({
+      username: "fullstack-tony",
+      email: "fullstack.tony@gmail.com",
+      password: "fullstack-password"
+    })
+      .then((user) => console.log(user.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .catch((err) => console.log(err))
   .catch((err) => console.log(err));
 
 module.exports = {
