@@ -1,39 +1,46 @@
 const express = require("express");
 const router = express.Router();
-const { getAllTransactions } = require("../controllers");
+const Transaction = require("../database").Transaction;
 
 router.get("/", (req, res) => {
-  res.send("Sending all transactions from the database!\n");
+  Transaction.findAll()
+    .then((transactions) => {
+      res.send(transactions);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.get("/:id", (req, res) => {
   let id = req.params.id;
-  res.send(`Sending a single transaction where id = ${id}!\n`);
+  Transaction.findOne({ where: { id } })
+    .then((transaction) => {
+      res.send(transaction);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.post("/", (req, res) => {
-  const {
+  let {
     amount,
     description,
     date,
     transactionType,
     categoryId,
-    categoryName,
     accountId
   } = req.body;
-  res.send(
-    `Adding a single post with amount = ${amount} with the description as '${description}'!\n`
-  );
+  Transaction.create({
+    amount: amount,
+    description: description,
+    transactionType: transactionType,
+    categoryId: categoryId,
+    accountId: accountId
+  })
+    .then((transaction) => {
+      res.send(transaction);
+    })
+    .catch((err) => console.log(err));
 });
 
-router.patch("/:id", (req, res) => {
-  let id = req.params.id;
-  res.send(`Updating a single transaction where the id = ${id}!\n`);
-});
-
-router.delete("/:id", (req, res) => {
-  let id = req.params.id;
-  res.send(`Deleting a single transaction where the id = ${id}!\n`);
-});
+router.delete("/:id", (req, res) => {});
 
 module.exports = router;
