@@ -1,13 +1,16 @@
 const express = require("express");
-const categoriesRoutes = express.Router();
+const router = express.Router();
 
-categoriesRoutes.get("/", (req, res) => {
-  res.send("Sending all categories from the database!\n");
-});
+const categories = require("../controllers/categories");
 
-categoriesRoutes.get("/:id", (req, res) => {
-  let id = req.params.id;
-  res.send(`Sending a single category where the id = ${id}!\n`);
-});
+router.get("/", categories.getCategories);
 
-module.exports = categoriesRoutes;
+router.get("/:id", categories.getCategory);
+
+router.post("/", categories.addCategory);
+
+router.put("/:id", categories.updateCategory);
+
+router.delete("/:id", categories.deleteCategory);
+
+module.exports = router;

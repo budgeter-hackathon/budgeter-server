@@ -42,12 +42,18 @@ sequelize
   .sync({ force: true })
   .then(() => console.log("Sequelize synced!"))
   .then(() => {
-    Account.create({ name: "Checking" })
+    Account.create({
+      name: "Checking",
+      budget: 5000.25
+    })
       .then((res) => console.log(res.dataValues))
       .catch((err) => console.log(err));
   })
   .then(() => {
-    Category.create({ name: "Food", targetBudget: 1234.56 })
+    Category.create({
+      name: "Food",
+      targetBudget: 1234.56
+    })
       .then((res) => console.log(res.dataValues))
       .catch((err) => console.log(err));
   })

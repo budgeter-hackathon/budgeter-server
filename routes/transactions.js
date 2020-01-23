@@ -1,46 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const Transaction = require("../database").Transaction;
+const controller = require("../controllers/transactions");
 
-router.get("/", (req, res) => {
-  Transaction.findAll()
-    .then((transactions) => {
-      res.send(transactions);
-    })
-    .catch((err) => console.log(err));
-});
+router.get("/", controller.getTransactions);
 
-router.get("/:id", (req, res) => {
-  let id = req.params.id;
-  Transaction.findOne({ where: { id } })
-    .then((transaction) => {
-      res.send(transaction);
-    })
-    .catch((err) => console.log(err));
-});
+router.get("/:id", controller.getTransaction);
 
-router.post("/", (req, res) => {
-  let {
-    amount,
-    description,
-    date,
-    transactionType,
-    categoryId,
-    accountId
-  } = req.body;
-  Transaction.create({
-    amount: amount,
-    description: description,
-    transactionType: transactionType,
-    categoryId: categoryId,
-    accountId: accountId
-  })
-    .then((transaction) => {
-      res.send(transaction);
-    })
-    .catch((err) => console.log(err));
-});
+router.post("/", controller.createTransaction);
 
-router.delete("/:id", (req, res) => {});
+router.put("/:id", controller.updateTransaction);
+
+router.delete("/:id", controller.deleteTransaction);
 
 module.exports = router;
