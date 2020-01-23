@@ -20,7 +20,7 @@ const Account = (sequelize, DataTypes) => {
       allowNull: true,
       unique: true
     },
-    budget: {
+    balance: {
       type: DataTypes.FLOAT,
       allowNull: false
     }

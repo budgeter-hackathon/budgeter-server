@@ -29,7 +29,6 @@ const UserModel = require("../models").User;
 const Account = AccountModel(sequelize, Sequelize);
 const Category = CategoryModel(sequelize, Sequelize);
 const Transaction = TransactionModel(sequelize, Sequelize);
-const User = UserModel(sequelize, Sequelize);
 
 /**
  * This syncs all models defined in the seqeuliz instance.
@@ -70,21 +69,11 @@ module.exports = sequelize
       .then((transaction) => console.log(transaction.dataValues))
       .catch((err) => console.log(err));
   })
-  .then(() => {
-    User.create({
-      username: "fullstack-tony",
-      email: "fullstack.tony@gmail.com",
-      password: "fullstacks-for-fullstack-tony"
-    })
-      .then((user) => console.log(user.dataValues))
-      .catch((err) => console.log(err));
-  })
   .catch((err) => console.log(err));
 
 module.exports = {
   sequelize: sequelize,
   Account: Account,
   Category: Category,
-  Transaction: Transaction,
-  User: User
+  Transaction: Transaction
 };
