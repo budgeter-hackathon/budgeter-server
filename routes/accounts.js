@@ -21,16 +21,22 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.put("/:id", (req, res) => {
-  res.json("PUT request to the accounts route!\n");
-});
-
-router.patch("/:id", (req, res) => {
-  res.json("PATCH request to the accounts route!\n");
+router.post("/", (req, res) => {
+  let account = req.body;
+  Account.create(account)
+    .then((account) => {
+      res.send(account);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.delete("/:id", (req, res) => {
-  res.json("DELETE request to the accounts route!\n");
+  let id = req.params.id;
+  Account.destroy({ where: { id } })
+    .then(() => {
+      res.send(`Account id ${id} successfully deleted!\n`);
+    })
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;
