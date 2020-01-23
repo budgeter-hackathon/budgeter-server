@@ -4,7 +4,10 @@
  * Set logging to true to the verbose command line output of the raw SQL queries
  * that Sequelize is executing.
  */
+
+const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
+
 const sequelize = new Sequelize(
   process.env.MYSQL_DATABASE,
   process.env.MYSQL_USERNAME,
@@ -21,10 +24,12 @@ const sequelize = new Sequelize(
 const AccountModel = require("../models").Account;
 const CategoryModel = require("../models").Category;
 const TransactionModel = require("../models").Transaction;
+const UserModel = require("../models").User;
 
 const Account = AccountModel(sequelize, Sequelize);
 const Category = CategoryModel(sequelize, Sequelize);
 const Transaction = TransactionModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize);
 
 /**
  * This syncs all models defined in the seqeuliz instance.
@@ -34,7 +39,7 @@ sequelize
   .then(() => console.log("Sequelize authenticated!"))
   .catch((err) => console.log(err));
 
-sequelize
+module.exports = sequelize
   .sync({ force: true })
   .then(() => console.log("Sequelize synced!"))
   .then(() => {
@@ -42,7 +47,7 @@ sequelize
       name: "Checking",
       budget: 5000.25
     })
-      .then((res) => console.log(res.dataValues))
+      .then((account) => console.log(account.dataValues))
       .catch((err) => console.log(err));
   })
   .then(() => {
@@ -50,7 +55,7 @@ sequelize
       name: "Food",
       targetBudget: 1234.56
     })
-      .then((res) => console.log(res.dataValues))
+      .then((category) => console.log(category.dataValues))
       .catch((err) => console.log(err));
   })
   .then(() => {
@@ -62,7 +67,16 @@ sequelize
       categoryId: 1,
       accountId: 1
     })
-      .then((res) => console.log(res.dataValues))
+      .then((transaction) => console.log(transaction.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
+    User.create({
+      username: "fullstack-tony",
+      email: "fullstack.tony@gmail.com",
+      password: "fullstacks-for-fullstack-tony"
+    })
+      .then((user) => console.log(user.dataValues))
       .catch((err) => console.log(err));
   })
   .catch((err) => console.log(err));
@@ -71,5 +85,6 @@ module.exports = {
   sequelize: sequelize,
   Account: Account,
   Category: Category,
-  Transaction: Transaction
+  Transaction: Transaction,
+  User: User
 };

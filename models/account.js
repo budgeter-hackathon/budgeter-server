@@ -8,7 +8,7 @@
  * | updatedAt | datetime     | NO   |     | NULL    |                |
  * +-----------+--------------+------+-----+---------+----------------+
  */
-const Accounts = (sequelize, DataTypes) => {
+const Account = (sequelize, DataTypes) => {
   return sequelize.define("accounts", {
     id: {
       type: DataTypes.INTEGER,
@@ -27,4 +27,4 @@ const Accounts = (sequelize, DataTypes) => {
   });
 };
 
-module.exports = Accounts;
+module.exports = Account;
