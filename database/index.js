@@ -16,10 +16,6 @@ const sequelize = new Sequelize(
 );
 
 /**
- * This authenticates / confirms the connection to the MySQL instance.
- */
-
-/**
  * Initializes each model / table in the database.
  */
 const AccountModel = require("../models").Account;
