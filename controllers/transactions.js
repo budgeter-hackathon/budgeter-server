@@ -21,9 +21,14 @@ const getTransaction = (req, res) => {
 
 const createTransaction = (req, res) => {
   let transaction = req.body;
+  console.log(transaction);
   Transaction.create(transaction)
     .then((transaction) => {
-      res.send(transaction);
+      if (transaction) {
+        Transaction.findAll().then((transactions) => {
+          res.send(transactions);
+        });
+      }
     })
     .catch((err) => console.log(err));
 };

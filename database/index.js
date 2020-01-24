@@ -40,6 +40,7 @@ module.exports = sequelize
   .then(() => console.log("Sequelize synced!"))
   .then(() => {
     Account.create({
+      id: 1,
       name: "Checking",
       balance: 5000.25
     })
@@ -48,6 +49,7 @@ module.exports = sequelize
   })
   .then(() => {
     Account.create({
+      id: 2,
       name: "Savings",
       balance: 2250.98
     })
@@ -56,6 +58,7 @@ module.exports = sequelize
   })
   .then(() => {
     Category.create({
+      id: 1,
       name: "Food",
       budget: 1234.56
     })
@@ -64,6 +67,7 @@ module.exports = sequelize
   })
   .then(() => {
     Category.create({
+      id: 2,
       name: "Shopping",
       budget: 5000.88
     })
@@ -74,7 +78,7 @@ module.exports = sequelize
     Transaction.create({
       amount: 12,
       description: "Big sandwich for big boi",
-      transactionType: "debit",
+      transactionType: "Debit",
       date: new Date(),
       categoryId: 1,
       accountId: 1
@@ -86,7 +90,7 @@ module.exports = sequelize
     Transaction.create({
       amount: 600,
       description: "Big jacket for big boi",
-      transactionType: "debit",
+      transactionType: "Debit",
       date: new Date(),
       categoryId: 2,
       accountId: 2
