@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const accounts = require("../controllers/accounts");
+
 const Account = require("../database").Account;
+
+// router.get("/", accounts.getAccounts);
 
 router.get("/", (req, res) => {
   Account.findAll()
@@ -11,6 +14,8 @@ router.get("/", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+// router.get("/:id", accounts.getAccount);
 
 router.get("/:id", (req, res) => {
   let id = req.params.id;

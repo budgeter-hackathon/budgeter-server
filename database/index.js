@@ -24,7 +24,6 @@ const sequelize = new Sequelize(
 const AccountModel = require("../models").Account;
 const CategoryModel = require("../models").Category;
 const TransactionModel = require("../models").Transaction;
-const UserModel = require("../models").User;
 
 const Account = AccountModel(sequelize, Sequelize);
 const Category = CategoryModel(sequelize, Sequelize);
@@ -44,7 +43,7 @@ module.exports = sequelize
   .then(() => {
     Account.create({
       name: "Checking",
-      budget: 5000.25
+      balance: 5000.25
     })
       .then((account) => console.log(account.dataValues))
       .catch((err) => console.log(err));

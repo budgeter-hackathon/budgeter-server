@@ -1,14 +1,3 @@
-/**
- * +--------------+--------------+------+-----+---------+----------------+
- * | Field        | Type         | Null | Key | Default | Extra          |
- * +--------------+--------------+------+-----+---------+----------------+
- * | id           | int(11)      | NO   | PRI | NULL    | auto_increment |
- * | name         | varchar(255) | NO   | UNI | NULL    |                |
- * | targetBudget | float        | NO   |     | 0       |                |
- * | createdAt    | datetime     | NO   |     | NULL    |                |
- * | updatedAt    | datetime     | NO   |     | NULL    |                |
- * +--------------+--------------+------+-----+---------+----------------+
- */
 const Categories = (sequelize, DataTypes) => {
   return sequelize.define("categories", {
     id: {
@@ -21,7 +10,7 @@ const Categories = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    targetBudget: {
+    budget: {
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 0

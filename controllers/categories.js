@@ -18,7 +18,9 @@ const getCategory = (req, res) => {
 };
 
 const addCategory = (req, res) => {
-  Category.create(category)
+  let balance = req.body.targetBudget;
+  let name = req.body.categoryName;
+  Category.create({ balance, name })
     .then((category) => {
       res.send(category);
     })
@@ -26,6 +28,7 @@ const addCategory = (req, res) => {
 };
 
 const updateCategory = (req, res) => {
+  let category = req.body;
   Category.update(category, { where: { id } })
     .then((category) => {
       Category.findOne({ where: { id } })
