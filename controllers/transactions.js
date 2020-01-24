@@ -1,4 +1,5 @@
 const Transaction = require("../database").Transaction;
+const sequelize = require("../database").sequelize;
 
 const getTransactions = (req, res) => {
   Transaction.findAll()
@@ -21,7 +22,6 @@ const getTransaction = (req, res) => {
 
 const createTransaction = (req, res) => {
   let transaction = req.body;
-  console.log(transaction);
   Transaction.create(transaction)
     .then((transaction) => {
       if (transaction) {

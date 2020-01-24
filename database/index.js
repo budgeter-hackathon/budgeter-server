@@ -35,43 +35,17 @@ sequelize
   .then(() => console.log("Sequelize authenticated!"))
   .catch((err) => console.log(err));
 
-module.exports = sequelize
+sequelize
   .sync({ force: true })
   .then(() => console.log("Sequelize synced!"))
   .then(() => {
-    Account.create({
-      id: 1,
-      name: "Checking",
-      balance: 5000.25
-    })
-      .then((account) => console.log(account.dataValues))
+    Account.create({ name: "Checking", balance: 2000 })
+      .then((res) => console.log(res.dataValues))
       .catch((err) => console.log(err));
   })
   .then(() => {
-    Account.create({
-      id: 2,
-      name: "Savings",
-      balance: 2250.98
-    })
-      .then((account) => console.log(account.dataValues))
-      .catch((err) => console.log(err));
-  })
-  .then(() => {
-    Category.create({
-      id: 1,
-      name: "Food",
-      budget: 1234.56
-    })
-      .then((category) => console.log(category.dataValues))
-      .catch((err) => console.log(err));
-  })
-  .then(() => {
-    Category.create({
-      id: 2,
-      name: "Shopping",
-      budget: 5000.88
-    })
-      .then((category) => console.log(category.dataValues))
+    Category.create({ name: "Food", budget: 1234.56 })
+      .then((res) => console.log(res.dataValues))
       .catch((err) => console.log(err));
   })
   .then(() => {
@@ -83,19 +57,9 @@ module.exports = sequelize
       categoryId: 1,
       accountId: 1
     })
-      .then((transaction) => console.log(transaction.dataValues))
-      .catch((err) => console.log(err));
-  })
-  .then(() => {
-    Transaction.create({
-      amount: 600,
-      description: "Big jacket for big boi",
-      transactionType: "Debit",
-      date: new Date(),
-      categoryId: 2,
-      accountId: 2
-    })
-      .then((transaction) => console.log(transaction.dataValues))
+      .then((res) => {
+        console.log(res.dataValues);
+      })
       .catch((err) => console.log(err));
   })
   .catch((err) => console.log(err));
