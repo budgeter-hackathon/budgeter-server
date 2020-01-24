@@ -19,6 +19,7 @@ const getAccount = (req, res) => {
 
 const addAccount = (req, res) => {
   let account = req.body;
+  console.log(account);
   Account.create(account)
     .then((account) => {
       res.send(account);

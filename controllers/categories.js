@@ -18,9 +18,9 @@ const getCategory = (req, res) => {
 };
 
 const addCategory = (req, res) => {
-  let balance = req.body.targetBudget;
-  let name = req.body.categoryName;
-  Category.create({ balance, name })
+  let budget = req.body.budget;
+  let name = req.body.name;
+  Category.create({ name, budget })
     .then((category) => {
       res.send(category);
     })

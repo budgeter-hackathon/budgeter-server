@@ -4,8 +4,6 @@
  * Set logging to true to the verbose command line output of the raw SQL queries
  * that Sequelize is executing.
  */
-
-const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
@@ -49,9 +47,25 @@ module.exports = sequelize
       .catch((err) => console.log(err));
   })
   .then(() => {
+    Account.create({
+      name: "Savings",
+      balance: 2250.98
+    })
+      .then((account) => console.log(account.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
     Category.create({
       name: "Food",
-      targetBudget: 1234.56
+      budget: 1234.56
+    })
+      .then((category) => console.log(category.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
+    Category.create({
+      name: "Shopping",
+      budget: 5000.88
     })
       .then((category) => console.log(category.dataValues))
       .catch((err) => console.log(err));
@@ -64,6 +78,18 @@ module.exports = sequelize
       date: new Date(),
       categoryId: 1,
       accountId: 1
+    })
+      .then((transaction) => console.log(transaction.dataValues))
+      .catch((err) => console.log(err));
+  })
+  .then(() => {
+    Transaction.create({
+      amount: 600,
+      description: "Big jacket for big boi",
+      transactionType: "debit",
+      date: new Date(),
+      categoryId: 2,
+      accountId: 2
     })
       .then((transaction) => console.log(transaction.dataValues))
       .catch((err) => console.log(err));
